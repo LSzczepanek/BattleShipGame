@@ -7,6 +7,8 @@ public class Game {
 	static String[][] boardOfPlayer1 = new String[5][5];
 	static Ship[][] realBoardOfPlayer1 = new Ship[5][5];
 	static String[][] boardOfPlayer2 = new String[5][5];
+	static Player player1 = new Player();
+	static Player player2 = new Player();
 	static Ship ship;
 	static Ship ship2;
 
