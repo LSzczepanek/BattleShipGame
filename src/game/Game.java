@@ -9,10 +9,11 @@ public class Game {
 	static String[][] boardOfPlayer2 = new String[5][5];
 	static Player player1 = new Player();
 	static Player player2 = new Player();
-	static Ship ship;
-	static Ship ship2;
+	static Ship ship = new Ship(2);
+	static Ship ship2 = new Ship(3);
+	static boolean gameIsPrepared = false;
 
-	private static void prepareGame() {
+	public static void prepareGame() {
 		Board.initlize(boardOfPlayer1);
 		Board.initlize(boardOfPlayer2);
 
@@ -21,7 +22,13 @@ public class Game {
 
 		System.out.println("\nBoard player2");
 		printBoard(boardOfPlayer2);
+		
+		gameIsPrepared = true;
 
+	}
+	
+	public static boolean isGamePrepared(){
+		return gameIsPrepared;
 	}
 
 	private static void printBoard(String[][] board) {
@@ -34,6 +41,9 @@ public class Game {
 		System.out.println();
 	}
 
+	public static String[][] getBoardOfPlayer1(){
+		return boardOfPlayer1;
+	}
 	private static void actualGame() {
 
 	}

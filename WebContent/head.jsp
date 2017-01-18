@@ -15,7 +15,13 @@
 
 <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Lobster">
+<style>
+.w3-lobster {
+	font-family: "Lobster", serif;
+}
+</style>
 <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 

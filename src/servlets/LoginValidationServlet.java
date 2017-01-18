@@ -5,15 +5,18 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import game.Game;
 import game.Login;
 
 /**
  * Servlet implementation class LoginValidateServlet
  */
+@WebServlet({ "/LoginValidationServlet", "/loginvalidation" })
 public class LoginValidationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -49,17 +52,17 @@ public class LoginValidationServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		if (login == null || login.length() == 0 || password == null || password.length() == 0) {
 			url = "/index.jsp";
-			request.setAttribute("error", "Błąd! Login i hasło nie mogą być puste!");
+			request.setAttribute("error", "Must be there something!");
 		} else {
 			boolean check = Login.loginValid(login, password);
 			if (check == true) {
 				
-
-				url = "/loginvalidate.jsp";
+				Game.prepareGame();
+				url = "/putShips.jsp";
 
 			} else {
 				url = "/index.jsp";
-				request.setAttribute("error", "Błąd! Podane dane są nieprawidłowe!");
+				request.setAttribute("error", "Error, login or password incorrect or someone already took!");
 			}
 		}
 		ServletContext context = getServletContext();

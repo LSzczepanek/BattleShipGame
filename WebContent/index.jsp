@@ -9,6 +9,7 @@
 <body>
 	<!-- Header
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <%@include file="header.jsp"%>
 	<!-- Page
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 	<%
@@ -16,7 +17,7 @@
 	%>
 	<c:set var="error_msg" value="${requestScope.error}" scope="page" />
 				<h2>Login in</h2>
-			<form action="loginvalid" method=post>
+			<form action="loginvalidation" method=post>
 				<input  type="text" name="login" required> <label
 					>Login</label> <input class="w3-input"
 					type="password" name="password" required> <label

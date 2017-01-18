@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import game.Game;
+import game.GameHelper;
+
 /**
  * Servlet implementation class TestBoardServlet
  */
@@ -37,9 +40,9 @@ public class TestBoardServlet extends HttpServlet {
 		String url = "/board.jsp";
 
 		//String[][] board = { { "B", "B", "S","H" }, { "B", "S", "B","X" }, { "S", "B", "B","J" } };
-		String[][] board = { { "B", "B", "B","B" }, { "B", "B", "B","B" }, { "B", "B", "B","B" } };
-		int position = Integer.parseInt(request.getParameter("ship1"));
-		board[position][position] = "S";
+		String[][] board = Game.getBoardOfPlayer1();
+//		int position[] = GameHelper.getCoords((request.getParameter("fireTo")));
+		GameHelper.setShipOnBoard(request.getParameter("setShip"));
 		request.setAttribute("board", board);
 		
 		ServletContext context = getServletContext();

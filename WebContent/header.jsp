@@ -13,6 +13,5 @@
 		</div>
 		<div class="w3-half w3-right-align"></div>
 	</div>
-	<h2 align="right"><c:out value='${wardName}'/></h2>
-	<p align="right"><c:out value='${doctorName}'/></p>
+	<p align="right"><c:out value='${playerName}'/></p>
 </header>

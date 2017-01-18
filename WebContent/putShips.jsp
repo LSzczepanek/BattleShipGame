@@ -12,9 +12,9 @@
 	<!-- Page
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 	<form action="test" method=get>
-	<label>Statek1</label>
-	<input name="ship1" type="text" pattern="tu wpisz pozycję statku">
-	<button>Wyślij pozycję</button>
+	<label>Ship 2x2</label>
+	<input name="setShip" type="text" >
+	<button>set ship</button>
 	</form>
 
 
