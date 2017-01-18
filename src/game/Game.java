@@ -7,8 +7,9 @@ public class Game {
 	static String[][] boardOfPlayer1 = new String[5][5];
 	static Ship[][] realBoardOfPlayer1 = new Ship[5][5];
 	static String[][] boardOfPlayer2 = new String[5][5];
-	static Player player1 = new Player();
-	static Player player2 = new Player();
+	static Ship[][] realBoardOfPlayer2 = new Ship[5][5];
+	static Player player1 = new Player("user");
+	static Player player2 = new Player("user2");
 	static Ship ship = new Ship(2);
 	static Ship ship2 = new Ship(3);
 	static boolean gameIsPrepared = false;
@@ -26,9 +27,48 @@ public class Game {
 		gameIsPrepared = true;
 
 	}
-	
+	public static Ship[][] getRealP2(){
+		return realBoardOfPlayer2;
+	}
 	public static boolean isGamePrepared(){
 		return gameIsPrepared;
+	}
+	
+	public static String getNickOfPlayer1(){
+		return player1.nick;
+	}
+	public static String getNickOfPlayer2(){
+		return player2.nick;
+	}
+	
+	public static boolean areAllPlayersReady(){
+		if(player1.isReady && player2.isReady){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public static void setReadyForPlayer(String nick, boolean isReady){
+		if(nick.equals(player1.nick)){
+			System.out.println("in set ready for player1");
+			player1.setReady(isReady);
+		}else if(nick.equals(player2.nick)){
+			System.out.println("in set ready for player2");
+			player2.setReady(isReady);
+		}else{
+			System.out.println("Error");
+		}
+	}
+	
+	public static Player getPlayer(String login){
+		if(login.equals(player1.nick)){
+			return player1;
+		}else if(login.equals(player2.nick)){
+			return player2;
+		}else{
+			return null;
+		}
 	}
 
 	private static void printBoard(String[][] board) {
@@ -44,6 +84,11 @@ public class Game {
 	public static String[][] getBoardOfPlayer1(){
 		return boardOfPlayer1;
 	}
+	
+	public static String[][] getBoardOfPlayer2(){
+		return boardOfPlayer2;
+	}
+	
 	private static void actualGame() {
 
 	}

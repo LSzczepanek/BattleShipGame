@@ -9,18 +9,22 @@
 <body>
 	<!-- Header
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+        <%@include file="header2.jsp"%>
 	<!-- Page
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-	<form action="test" method=get>
-	<label>Ship 2x2</label>
-	<input name="setShip" type="text" >
-	<button>set ship</button>
+    
+    
+    <%@include file="playerBoard.jsp" %>
+	<form action="setBoard" method=get>
+	<label>Ship 2x1</label>
+	<input name="Ship_2x1" type="text" >
+	<button>set ship 2x1</button>
 	</form>
 
 
 	<!-- Footer
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-	<p>Created by Lukasz Szczepanek</p>
+	<%@include file="footer.jsp"%>
 </body>
 </html>

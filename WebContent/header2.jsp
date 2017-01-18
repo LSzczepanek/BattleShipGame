@@ -1,6 +1,4 @@
 <%@ page import="java.io.*, java.util.*" %>
-
-
 <header class="w3-container w3-teal">
 	<div class="w3-row">
 		<div class="w3-half">
@@ -8,4 +6,5 @@
 		</div>
 		<div class="w3-half w3-right-align"></div>
 	</div>
+	<p> You are logged in as: ${sessionScope.login}</p>
 </header>

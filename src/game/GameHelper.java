@@ -14,9 +14,18 @@ public class GameHelper {
 	public static final int D = 3;
 	public static final int E = 4;
 
-	public static String firePlayer1(int x, int y){
-		System.out.println("Fire Player1");
-		return fire(x,y, Game.boardOfPlayer1, Game.realBoardOfPlayer1);
+	public static String firePlayer(int x, int y, String player){
+		
+		if(player.equals(Game.player1.nick)){
+			System.out.println("Fire Player1");
+			return fire(x,y, Game.boardOfPlayer2, Game.realBoardOfPlayer2);
+		}else if(player.equals(Game.player2.nick)){
+			System.out.println("Fire player2");
+			return fire(x,y,Game.boardOfPlayer1, Game.realBoardOfPlayer1);
+		}else{
+			return null;
+		}
+		
 	}
 	
 	public static String fire(int x, int y, String[][] playerBoard, Ship[][] realBoard) {
@@ -30,14 +39,28 @@ public class GameHelper {
 		} else if (playerBoard[x][y].equals("S") && realBoard[x][y] !=null) {
 			playerBoard[x][y] = "X";
 			realBoard[x][y].getHit();
+			if(realBoard[x][y].isShipDestroyed()){
+				return "SHIP DESTROYED";
+			}
 			return "HIT";
 		} else {
 			return "WRONG";
 		}
 	}
 	
-	public static void setShipOnBoard(String coor){
-		setShipOnBoard(Game.ship, coor, Game.boardOfPlayer1, Game.realBoardOfPlayer1);
+	public static void setShipOnBoard(String coor, Ship ship, String player){
+		if(player.equals(Game.player1.nick)){
+			System.out.println("Player 1 set ship");
+			setShipOnBoard(ship, coor, Game.boardOfPlayer1, Game.realBoardOfPlayer1);
+			Game.player1.setAmountOfShips(Game.player1.getAmountOfShips()+1);
+		}else if(player.equals(Game.player2.nick)){
+			System.out.println("Player 2 set ship");
+			setShipOnBoard(ship, coor, Game.boardOfPlayer2, Game.realBoardOfPlayer2);
+			Game.player2.setAmountOfShips(Game.player2.getAmountOfShips()+1);
+		}else{
+			System.out.println("Something went wrong");
+		}
+		
 	}
 
 	public static void setShipOnBoard(Ship ship, String coor, String[][] board, Ship[][] realBoard) {
@@ -54,7 +77,6 @@ public class GameHelper {
 			for(int i = ship.coordStart.getY(); i <= ship.coordEnd.getY(); i++){
 				realBoard[ship.coordStart.getX()][i] = ship;
 			}
-			
 		}else if(ship.coordStart.getY() == ship.coordEnd.getY()) {
 			for(int i = ship.coordStart.getX(); i <= ship.coordEnd.getX(); i++){
 				board[i][ship.coordStart.getY()] = "S";

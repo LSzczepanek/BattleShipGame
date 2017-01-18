@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import game.Game;
 import game.Login;
@@ -56,9 +57,21 @@ public class LoginValidationServlet extends HttpServlet {
 		} else {
 			boolean check = Login.loginValid(login, password);
 			if (check == true) {
-				
-				Game.prepareGame();
-				url = "/putShips.jsp";
+				if(!Game.isGamePrepared()){
+					Game.prepareGame();
+				}
+				HttpSession session = request.getSession();
+		        session.setAttribute("login", login);
+		        if(login.equals(Game.getNickOfPlayer1())){
+					request.setAttribute("playerBoard", Game.getBoardOfPlayer1());
+					
+				}else if(login.equals(Game.getNickOfPlayer2())){
+					request.setAttribute("playerBoard", Game.getBoardOfPlayer2());
+					
+				}else{
+					System.out.println("Error");
+				}
+				url = "/validLogin.jsp";
 
 			} else {
 				url = "/index.jsp";

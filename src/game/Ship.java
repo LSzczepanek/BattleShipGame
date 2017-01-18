@@ -16,6 +16,9 @@ public class Ship {
 		
 	}
 	
+	public int getHP(){
+		return lifeOfShip;
+	}
 	
 	public void getHit(){
 		this.lifeOfShip = this.lifeOfShip-1;

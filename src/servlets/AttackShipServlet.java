@@ -45,18 +45,29 @@ public class AttackShipServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
+		String login = (String) request.getSession().getAttribute("login");
+		int[] position = GameHelper.getCoords((request.getParameter("fireTo")));
 		String url = "/board.jsp";
 //		if(!Game.isGamePrepared()){
 //			Game.prepareGame();
 //		}
 		
 //		String[][] board = Game.getBoardOfPlayer1();
-		int[] position = GameHelper.getCoords((request.getParameter("fireTo")));
-		String infoHit = GameHelper.firePlayer1(position[0], position[1]);
-//		board[position][position] = "X";
+
+		String infoHit = GameHelper.firePlayer(position[0], position[1], login);
+
 		request.setAttribute("hitInfo", infoHit);
-		request.setAttribute("board", Game.getBoardOfPlayer1());
-		
+		if(login.equals(Game.getNickOfPlayer1())){
+			request.setAttribute("playerBoard", Game.getBoardOfPlayer1());
+			request.setAttribute("enemyBoard", Game.getBoardOfPlayer2());
+			
+			
+		}else if(login.equals(Game.getNickOfPlayer2())){
+			request.setAttribute("playerBoard", Game.getBoardOfPlayer2());
+			request.setAttribute("enemyBoard", Game.getBoardOfPlayer1());
+		}else{
+			System.out.println("Error");
+		}
 		
 		ServletContext context = getServletContext();
 		RequestDispatcher dispatcher = context.getRequestDispatcher(url);

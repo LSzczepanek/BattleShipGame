@@ -1,7 +1,7 @@
 
 <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-<title>BattleShipGame</title>
+<title>BattleShipGameHead</title>
 <meta name="description" content="">
 <meta name="author" content="">
 <%@page isELIgnored="false"%>

@@ -9,8 +9,8 @@ public class Login {
 			return true;
 		} else if (user.equalsIgnoreCase("user2") && pass.equals("user2pw") && !Game.player2.isTaken){
 			Game.player2.isTaken = true;
-			Game.player1.setNick(user);
-			return false;
+			Game.player2.setNick(user);
+			return true;
 		}else{
 			return false;
 		}
