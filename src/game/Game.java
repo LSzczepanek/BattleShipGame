@@ -4,10 +4,10 @@ import static game.GameHelper.*;
 
 public class Game {
 
-	static String[][] boardOfPlayer1 = new String[5][5];
-	static Ship[][] realBoardOfPlayer1 = new Ship[5][5];
-	static String[][] boardOfPlayer2 = new String[5][5];
-	static Ship[][] realBoardOfPlayer2 = new Ship[5][5];
+	static String[][] boardOfPlayer1 = new String[11][11];
+	static Ship[][] realBoardOfPlayer1 = new Ship[11][11];
+	static String[][] boardOfPlayer2 = new String[11][11];
+	static Ship[][] realBoardOfPlayer2 = new Ship[11][11];
 	static Player player1 = new Player("user");
 	static Player player2 = new Player("user2");
 	static Ship ship = new Ship(2);

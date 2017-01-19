@@ -7,12 +7,12 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 </head>
 <body>
+<center>
 	<!-- Header
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <%@include file="header2.jsp"%>
 	<!-- Page
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <p> You are logged in as: ${sessionScope.login}</p>
     
     <script>
   setTimeout(function() {
@@ -31,5 +31,6 @@
 	<!-- Footer
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 <%@include file="footer.jsp"%>
+</center>
 </body>
 </html>

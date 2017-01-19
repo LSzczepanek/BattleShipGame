@@ -7,26 +7,28 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 </head>
 <body>
-	<!-- Header
+	<center>
+		<!-- Header
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-        <%@include file="header2.jsp"%>
-	<!-- Page
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    
-    
-    <%@include file="playerBoard.jsp" %>
-	<form action="setBoard" method=get>
-	<label>Ship 2x1</label>
-	<input name="Ship_2x1" type="text" >
-	<button>set ship 2x1</button>
-	<c:set var="error_msg" value="${requestScope.error}" scope="page" />
-	<p>${error_msg}</p>
-	</form>
-
-
-	<!-- Footer
+		<%@include file="header2.jsp"%>
+		<!-- Page
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-	<%@include file="footer.jsp"%>
+
+		<%@include file="playerBoard.jsp"%>
+		<form action="setBoard" method=get>
+			<label>Ship 2x1</label> <input name="Ship_2x1" type="text">
+			<button>set ship 2x1</button>
+			<c:set var="errorPutShips" value="${requestScope.errorInSetBoard}"
+				scope="page" />
+			<p>${errorPutShips}</p>
+		</form>
+
+
+		<!-- Footer
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+		<%@include file="footer.jsp"%>
+	</center>
 </body>
 </html>

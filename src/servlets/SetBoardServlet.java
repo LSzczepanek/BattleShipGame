@@ -45,19 +45,38 @@ public class SetBoardServlet extends HttpServlet {
 		request.getSession().setAttribute("login", login);
 
 		if (Game.getPlayer(login).amountOfShips == 0) {
-			if (Pattern.matches("[A-E][0-9][-][A-E][0-9]", request.getParameter("Ship_2x1"))) {
+			if (Pattern.matches("[A-J][0-9][-][A-J][0-9]", request.getParameter("Ship_2x1"))) {
 				url = "/putShips2.jsp";
-				GameHelper.setShipOnBoard(request.getParameter("Ship_2x1"), Game.getPlayer(login).getShip2x1(), login);
+				if(!GameHelper.setShipOnBoard(request.getParameter("Ship_2x1"), Game.getPlayer(login).getShip2x1(), login)){
+					url = "/putShips.jsp";
+					request.setAttribute("errorInSetBoard", "You can't set there ship, there is already a ship!");
+				}
 			}else{
 				url = "/putShips.jsp";
-				request.setAttribute("errorInSetBoard", "Error, login or password incorrect or someone already took!");
+				request.setAttribute("errorInSetBoard", "You put wrong data, pattern is e.g A0-A1");
 			}
 		} else if (Game.getPlayer(login).amountOfShips == 1) {
-			url = "/putShips3.jsp";
-			GameHelper.setShipOnBoard(request.getParameter("Ship_3x1"), Game.getPlayer(login).getShip3x1(), login);
+			if (Pattern.matches("[A-J][0-9][-][A-J][0-9]", request.getParameter("Ship_3x1"))) {
+				url = "/putShips3.jsp";
+				if(!GameHelper.setShipOnBoard(request.getParameter("Ship_3x1"), Game.getPlayer(login).getShip3x1(), login)){
+					url = "/putShips2.jsp";
+					request.setAttribute("errorInSetBoard", "You can't set there ship, there is already a ship!");
+				}
+			}else{
+				url = "/putShips2.jsp";
+				request.setAttribute("errorInSetBoard", "You put wrong data, pattern is e.g A0-A1");
+			}
 		} else if (Game.getPlayer(login).amountOfShips == 2) {
-			url = "/readyPage.jsp";
-			GameHelper.setShipOnBoard(request.getParameter("Ship_4x1"), Game.getPlayer(login).getShip4x1(), login);
+			if (Pattern.matches("[A-J][0-9][-][A-J][0-9]", request.getParameter("Ship_4x1"))) {
+				url = "/readyPage.jsp";
+				if(!GameHelper.setShipOnBoard(request.getParameter("Ship_4x1"), Game.getPlayer(login).getShip3x1(), login)){
+					url = "/putShips3.jsp";
+					request.setAttribute("errorInSetBoard", "You can't set there ship, too close to another ship!");
+				}
+			}else{
+				url = "/putShips3.jsp";
+				request.setAttribute("errorInSetBoard", "You put wrong data, pattern is e.g A0-A1");
+			}
 		} else {
 			Game.getPlayer(login).isTaken = false;
 			url = "/login.jsp";
@@ -85,14 +104,7 @@ public class SetBoardServlet extends HttpServlet {
 		} else {
 			System.out.println("Error");
 		}
-		// String[][] board = { { "B", "B", "S","H" }, { "B", "S", "B","X" }, {
-		// "S", "B", "B","J" } };
-		// String[][] board = Game.getBoardOfPlayer1();
-		// int position[] =
-		// GameHelper.getCoords((request.getParameter("fireTo")));
-
-		// request.setAttribute("playerBoard", board);
-
+		
 		ServletContext context = getServletContext();
 		RequestDispatcher dispatcher = context.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

@@ -7,33 +7,36 @@
 <%@include file="head.jsp"%>
 </head>
 <body>
-	<!-- Header
+	<center>
+		<!-- Header
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <%@include file="header.jsp"%>
-	<!-- Page
+		<%@include file="header.jsp"%>
+		<!-- Page
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-	<c:set var="error_msg" value="${requestScope.error}" scope="page" />
-				<h2>Login in</h2>
-			<form action="loginvalidation" method=post>
-				<input  type="text" name="login" required> <label
-					>Login</label> <input class="w3-input"
-					type="password" name="password" required> <label
-					 style="display: block">Password</label> <br>
-				<button>Login</button>
-			</form>
-			<p>${error_msg}</p>
+		<c:set var="error_msg" value="${requestScope.error}" scope="page" />
+		<h2>Login in</h2>
+		<form action="loginvalidation" method=post>
+		 	<label style="display: block">Login</label>
+			<input type="text" name="login" required>
+			<br>
+			<label style="display: block">Password</label>
+			<input class="w3-input" type="password" name="password" required>
+			<br>
+			<button>Login</button>
+		</form>
+		<p>${error_msg}</p>
 		</div>
 		<div></div>
-	</div>
+		</div>
 
 
-	<!-- Footer
+		<!-- Footer
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-	
-		    <%@include file="footer.jsp"%>
+
+		<%@include file="footer.jsp"%>
 
 
-
+	</center>
 </body>
 </html>

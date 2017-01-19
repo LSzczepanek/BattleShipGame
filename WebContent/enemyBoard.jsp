@@ -7,24 +7,7 @@
 <head>
 <%@include file="head.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
-<script>
-	$(document).ready(function() {
-		var reloadData = 0; // store timer
 
-		// load data on page load, which sets timeout to reload again
-		loadData();
-	});
-
-	function loadData() {
-		$('#load_me').load('board.jsp', function() {
-			if (reloadData != 0)
-				window.clearTimeout(reloadData);
-			reloadData = window.setTimeout(loadData, 10000)
-		}).fadeIn("slow");
-	}
-</script>
 </head>
 <body>
 
@@ -42,7 +25,7 @@
 			<tr>
 				<c:forEach var="i" begin="0" end="${fn:length(field)-1}">
 					<c:choose>
-						<c:when test="${field[i] == 'B'}">
+						<c:when test="${field[i] == 'W'}">
 							<td
 								style="background-color: blue; padding-left: 2em; padding-top: 2em;">&nbsp</td>
 						</c:when>
@@ -54,13 +37,13 @@
 							<td
 								style="background-color: red; padding-left: 2em; padding-top: 2em;">&nbsp</td>
 						</c:when>
-						<c:when test="${field[i] == 'H'}">
+						<c:when test="${field[i] == 'O'}">
 							<td
 								style="background-color: gray; padding-left: 2em; padding-top: 2em;">&nbsp</td>
 						</c:when>
 						<c:otherwise>
 							<td
-								style="background-color: blue; padding-left: 2em; padding-top: 2em;">&nbsp</td>
+								style="background-color: white; padding-left: 2em; padding-top: 2em;">${field[i]}</td>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>

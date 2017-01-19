@@ -7,23 +7,26 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 </head>
 <body>
-	<!-- Header
+	<center>
+		<!-- Header
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <%@include file="header2.jsp"%>
-	<!-- Page
+		<%@include file="header2.jsp"%>
+		<!-- Page
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <p> You are logged in as: ${sessionScope.login}</p>
-    
-    <%@include file="playerBoard.jsp" %>
-	<form action="setBoard" method=get>
-	<label>Ship 3x1</label>
-	<input name="Ship_3x1" type="text" >
-	<button>set ship 3x1</button>
-	</form>
+
+		<%@include file="playerBoard.jsp"%>
+		<form action="setBoard" method=get>
+			<label>Ship 3x1</label> <input name="Ship_3x1" type="text">
+			<button>set ship 3x1</button>
+			<c:set var="errorPutShips" value="${requestScope.errorInSetBoard}"
+				scope="page" />
+			<p>${errorPutShips}</p>
+		</form>
 
 
-	<!-- Footer
+		<!-- Footer
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-<%@include file="footer.jsp"%>
+    <%@include file="footer.jsp"%>
+	</center>
 </body>
 </html>
