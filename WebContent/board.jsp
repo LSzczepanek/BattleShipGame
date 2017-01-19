@@ -7,7 +7,14 @@
 <head>
 <%@include file="head.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
+<script>
+	$(document).ready(function() {
+		setInterval(function() {
+			var randomnumber = Math.floor(Math.random() * 100);
+			$('#show')
+		}, 3000);
+	});
+</script>
 
 </head>
 <body>
@@ -17,11 +24,9 @@
 		<%@include file="header2.jsp"%>
 		<!-- Page
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-        <script>
-  setTimeout(function() {
-      document.location = "/BattleShipGame/attack";
-  }, 5000); // <-- this is the delay in milliseconds
-</script>
+
+
+
 
 		<%@include file="enemyBoard.jsp"%>
 
@@ -29,9 +34,20 @@
 		<h1>${whoTurn}</h1>
 		<c:set var="hitInfo" value="${requestScope.infoHit}" scope="page" />
 		<h1>${hitInfo}</h1>
+		<div id="show">
+			<%
+				String login = (String) request.getSession().getAttribute("login");
+				if (login.equals(Game.getNickOfPlayer1())) {
+					request.setAttribute("playerBoard", Game.getBoardOfPlayer1());
+					request.setAttribute("enemyBoard", Game.getBoardOfPlayer2());
 
-		<%@include file="playerBoard.jsp"%>
-
+				} else if (login.equals(Game.getNickOfPlayer2())) {
+					request.setAttribute("playerBoard", Game.getBoardOfPlayer2());
+					request.setAttribute("enemyBoard", Game.getBoardOfPlayer1());
+				}
+			%>
+			<%@include file="playerBoard.jsp"%>
+		</div>
 		<form action="attack" method=post>
 			<input name="fireTo" type="text" required>
 			<button>Fire!</button>
