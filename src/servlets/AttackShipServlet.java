@@ -37,23 +37,12 @@ public class AttackShipServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at AttackShipServlet: ").append(request.getContextPath());
-
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-
+		
 		String login = (String) request.getSession().getAttribute("login");
 		int[] position = GameHelper.getCoords((request.getParameter("fireTo")));
 		String url = "/board.jsp";
 		System.out.println("Now is turn of player " + login + ": " + Game.showWhosTurn(login));
-		if (Game.isPlayerTurn(login)) {
+		if (Game.isPlayerTurn(login) && position.length > 1) {
 
 			String infoHit = GameHelper.firePlayer(position[0], position[1], login);
 
@@ -91,6 +80,18 @@ public class AttackShipServlet extends HttpServlet {
 		ServletContext context = getServletContext();
 		RequestDispatcher dispatcher = context.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+
+		
 	}
 
 }
