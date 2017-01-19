@@ -102,6 +102,6 @@
     </script>
  </head>
 <body>
-<div id="load_me"> <%@ include file="samp.jsp" %></div>
+<div id="load_me"> <%@ include file="playerBoard.jsp" %></div>
 </body>
 /html>
