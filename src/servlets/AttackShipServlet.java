@@ -37,8 +37,7 @@ public class AttackShipServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at AttackShipServlet: ").append(request.getContextPath());
-		
-		
+
 	}
 
 	/**
@@ -48,43 +47,39 @@ public class AttackShipServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
+		// doGet(request, response);
 
 		String login = (String) request.getSession().getAttribute("login");
 		String url = "/board.jsp";
-		int[] position = null;
-		try{
-		position = GameHelper.getCoords((request.getParameter("fireTo")));
-		}catch(NullPointerException e){
-			ServletContext context = getServletContext();
-			RequestDispatcher dispatcher = context.getRequestDispatcher(url);
-			dispatcher.forward(request, response);
-		}
-		
-		System.out.println("Now is turn of player " + login + ": " + Game.showWhosTurn(login));
-		if (Game.isPlayerTurn(login) && position.length > 1) {
 
-			String infoHit = GameHelper.firePlayer(position[0], position[1], login);
+		if (Pattern.matches("[A-J][0-9]", request.getParameter("fireTo"))) {
+			System.out.println("Now is turn of player " + login + ": " + Game.showWhosTurn(login));
+			if (Game.isPlayerTurn(login)) {
+				int[] position = GameHelper.getCoords((request.getParameter("fireTo")));
+				String infoHit = GameHelper.firePlayer(position[0], position[1], login);
 
-			if (infoHit.equals("YOU WON")) {
-				url = "/youWon.jsp";
-				Game.setSecondPlayerTurn(login);
-				request.setAttribute("gameStatus", infoHit);
-				Game.getPlayer(login).setTaken(false);
+				if (infoHit.equals("YOU WON")) {
+					url = "/youWon.jsp";
+					Game.setSecondPlayerTurn(login);
+					request.setAttribute("gameStatus", infoHit);
+					Game.getPlayer(login).setTaken(false);
 
+				} else if (infoHit.equals("YOU LOST")) {
+					url = "/youLost.jsp";
+					request.setAttribute("gameStatus", infoHit);
+					Game.getPlayer(login).setTaken(false);
 
-			} else if (infoHit.equals("YOU LOST")) {
-				url = "/youLost.jsp";
-				request.setAttribute("gameStatus", infoHit);
-				Game.getPlayer(login).setTaken(false);
+				} else if (!infoHit.equals("HIT") && !infoHit.equals("SHIP DESTROYED") && !infoHit.equals("WRONG")
+						&& !infoHit.equals("OUT OF BOARD")) {
+					Game.setSecondPlayerTurn(login);
+					System.out.println("Used second player turn!!!");
+				}
 
-			} else if (!infoHit.equals("HIT") && !infoHit.equals("SHIP DESTROYED") && !infoHit.equals("WRONG")
-					&& !infoHit.equals("OUT OF BOARD")) {
-				Game.setSecondPlayerTurn(login);
-				System.out.println("Used second player turn!!!");
+				request.setAttribute("hitInfo", infoHit);
 			}
-
-			request.setAttribute("hitInfo", infoHit);
+		} else {
+			url = "/board.jsp";
+			request.setAttribute("errorAttack", "You put wrong data, pattern is e.g A0-A1");
 		}
 		if (login.equals(Game.getNickOfPlayer1())) {
 			request.setAttribute("playerBoard", Game.getBoardOfPlayer1());
