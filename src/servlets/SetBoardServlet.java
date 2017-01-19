@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -40,53 +41,58 @@ public class SetBoardServlet extends HttpServlet {
 		String url = "/putShips.jsp";
 		String login = (String) request.getSession().getAttribute("login");
 		int playerAmountOnTheStart = Game.getPlayer(login).amountOfShips;
-		System.out.println("User login used: "+request.getSession().getAttribute("login"));
+		System.out.println("User login used: " + request.getSession().getAttribute("login"));
 		request.getSession().setAttribute("login", login);
-		
-		if(Game.getPlayer(login).amountOfShips==0){
-			url = "/putShips2.jsp";
-			GameHelper.setShipOnBoard(request.getParameter("Ship_2x1"), Game.getPlayer(login).getShip2x1(), login);
-		}
-		else if(Game.getPlayer(login).amountOfShips==1){
+
+		if (Game.getPlayer(login).amountOfShips == 0) {
+			if (Pattern.matches("[A-E][0-9][-][A-E][0-9]", request.getParameter("Ship_2x1"))) {
+				url = "/putShips2.jsp";
+				GameHelper.setShipOnBoard(request.getParameter("Ship_2x1"), Game.getPlayer(login).getShip2x1(), login);
+			}else{
+				url = "/putShips.jsp";
+				request.setAttribute("errorInSetBoard", "Error, login or password incorrect or someone already took!");
+			}
+		} else if (Game.getPlayer(login).amountOfShips == 1) {
 			url = "/putShips3.jsp";
 			GameHelper.setShipOnBoard(request.getParameter("Ship_3x1"), Game.getPlayer(login).getShip3x1(), login);
-		}
-		else if(Game.getPlayer(login).amountOfShips==2){
+		} else if (Game.getPlayer(login).amountOfShips == 2) {
 			url = "/readyPage.jsp";
 			GameHelper.setShipOnBoard(request.getParameter("Ship_4x1"), Game.getPlayer(login).getShip4x1(), login);
-		}else{
+		} else {
 			Game.getPlayer(login).isTaken = false;
 			url = "/login.jsp";
 		}
-		
-		if(Game.getPlayer(login).amountOfShips == playerAmountOnTheStart && playerAmountOnTheStart == 0){
+
+		if (Game.getPlayer(login).amountOfShips == playerAmountOnTheStart && playerAmountOnTheStart == 0) {
 			url = "/putShips.jsp";
 		}
-		if(Game.getPlayer(login).amountOfShips == playerAmountOnTheStart && playerAmountOnTheStart == 1){
+		if (Game.getPlayer(login).amountOfShips == playerAmountOnTheStart && playerAmountOnTheStart == 1) {
 			url = "/putShips2.jsp";
 		}
-		if(Game.getPlayer(login).amountOfShips == playerAmountOnTheStart && playerAmountOnTheStart == 2){
+		if (Game.getPlayer(login).amountOfShips == playerAmountOnTheStart && playerAmountOnTheStart == 2) {
 			url = "/putShips3.jsp";
 		}
-		if(Game.getPlayer(login).amountOfShips == playerAmountOnTheStart && playerAmountOnTheStart == 3){
+		if (Game.getPlayer(login).amountOfShips == playerAmountOnTheStart && playerAmountOnTheStart == 3) {
 			url = "/readyPage.jsp";
 		}
-		
-		if(login.equals(Game.getNickOfPlayer1())){
+
+		if (login.equals(Game.getNickOfPlayer1())) {
 			request.setAttribute("playerBoard", Game.getBoardOfPlayer1());
-			
-		}else if(login.equals(Game.getNickOfPlayer2())){
+
+		} else if (login.equals(Game.getNickOfPlayer2())) {
 			request.setAttribute("playerBoard", Game.getBoardOfPlayer2());
-			
-		}else{
+
+		} else {
 			System.out.println("Error");
 		}
-		//String[][] board = { { "B", "B", "S","H" }, { "B", "S", "B","X" }, { "S", "B", "B","J" } };
-//		String[][] board = Game.getBoardOfPlayer1();
-//		int position[] = GameHelper.getCoords((request.getParameter("fireTo")));
-		
-//		request.setAttribute("playerBoard", board);
-		
+		// String[][] board = { { "B", "B", "S","H" }, { "B", "S", "B","X" }, {
+		// "S", "B", "B","J" } };
+		// String[][] board = Game.getBoardOfPlayer1();
+		// int position[] =
+		// GameHelper.getCoords((request.getParameter("fireTo")));
+
+		// request.setAttribute("playerBoard", board);
+
 		ServletContext context = getServletContext();
 		RequestDispatcher dispatcher = context.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

@@ -27,6 +27,17 @@ public class Game {
 		gameIsPrepared = true;
 
 	}
+	public static String[][] getPlayerBoard(String nick){
+		if(nick.equals(Game.getNickOfPlayer1())){
+			return getBoardOfPlayer1();
+		}if(nick.equals(Game.getNickOfPlayer2())){
+			return getBoardOfPlayer2();
+		}else{
+			return null;
+		}
+		
+	}
+	
 	public static Ship[][] getRealP2(){
 		return realBoardOfPlayer2;
 	}

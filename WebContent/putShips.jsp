@@ -19,6 +19,8 @@
 	<label>Ship 2x1</label>
 	<input name="Ship_2x1" type="text" >
 	<button>set ship 2x1</button>
+	<c:set var="error_msg" value="${requestScope.error}" scope="page" />
+	<p>${error_msg}</p>
 	</form>
 
 

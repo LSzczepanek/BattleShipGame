@@ -9,22 +9,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
-<script>
-	$(document).ready(function() {
-		var reloadData = 0; // store timer
 
-		// load data on page load, which sets timeout to reload again
-		loadData();
-	});
-
-	function loadData() {
-		$('#load_me').load('board.jsp', function() {
-			if (reloadData != 0)
-				window.clearTimeout(reloadData);
-			reloadData = window.setTimeout(loadData, 10000)
-		}).fadeIn("slow");
-	}
-</script>
 </head>
 <body>
 
@@ -35,7 +20,7 @@
 
 
 	<h1>YOUR BOARD</h1>
-	<table>
+	<table id = "load_me">
 
 
 		<c:forEach var="field" items='${requestScope.playerBoard}'>
