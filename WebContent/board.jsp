@@ -8,56 +8,9 @@
 <%@include file="head.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script>
-	$(document).ready(function() {
-		setInterval(function() {
-
-			$('#show');
-		}, 3000);
-	});
-</script>
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
-<script>
-	//$(document).ready(function() {
-	//	var reloadData = 0; // store timer
-
-	// load data on page load, which sets timeout to reload again
-	//	loadData();
-	//	});
-
-	//	function loadData() {
-	//	$('#load_me').load('board.jsp', function() {
-	//			if (reloadData != 0)
-	//				window.clearTimeout(reloadData);
-	//			reloadData = window.setTimeout(loadData, 10000)
-	//		}).fadeIn("slow");
-	//	}
-</script>
 </head>
 <body>
 	<center>
-		<h2>Auto Refresh Header Example</h2>
-		<%
-			// Set refresh, autoload time as 5 seconds
-			//response.setIntHeader("Refresh", 1);
-
-			// Get current time
-			//Calendar calendar = new GregorianCalendar();
-			//String am_pm;
-			//int hour = calendar.get(Calendar.HOUR);
-			//int minute = calendar.get(Calendar.MINUTE);
-			//int second = calendar.get(Calendar.SECOND);
-			//if(calendar.get(Calendar.AM_PM) == 0)
-			//   am_pm = "AM";
-			//else
-			//   am_pm = "PM";
-			//String CT = hour+":"+ minute +":"+ second +" "+ am_pm;
-			//out.println("Crrent Time: " + CT + "\n");
-		%>
 	
 	<!-- Header
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
