@@ -16,11 +16,31 @@ public class GameHelper {
 	public static String firePlayer(int x, int y, String player) {
 
 		if (player.equals(Game.player1.nick)) {
+			if(Game.player1.getAmountOfShips()==0){
+				return "YOU LOST";
+			}
 			System.out.println("Fire Player1");
-			return fire(x, y, Game.boardOfPlayer2, Game.realBoardOfPlayer2);
+			String result = fire(x, y, Game.boardOfPlayer2, Game.realBoardOfPlayer2);
+			if(result.equals("SHIP DESTROYED")){
+				Game.player2.setAmountOfShips(Game.player2.getAmountOfShips()-1);
+			}
+			if(Game.player2.getAmountOfShips()==0){
+				result = "YOU WON";
+			}
+			return result;
 		} else if (player.equals(Game.player2.nick)) {
+			if(Game.player2.getAmountOfShips()==0){
+				return "YOU LOST";
+			}
 			System.out.println("Fire player2");
-			return fire(x, y, Game.boardOfPlayer1, Game.realBoardOfPlayer1);
+			String result = fire(x, y, Game.boardOfPlayer1, Game.realBoardOfPlayer1);
+			if(result.equals("SHIP DESTROYED")){
+				Game.player1.setAmountOfShips(Game.player1.getAmountOfShips()-1);
+			}
+			if(Game.player1.getAmountOfShips()==0){
+				result = "YUO WON";
+			}
+			return result;
 		} else {
 			return null;
 		}

@@ -68,10 +68,11 @@ public class SetBoardServlet extends HttpServlet {
 			}
 		} else if (Game.getPlayer(login).amountOfShips == 2) {
 			if (Pattern.matches("[A-J][0-9][-][A-J][0-9]", request.getParameter("Ship_4x1"))) {
+				request.setAttribute("whoTurn", Game.showWhosTurn(login));
 				url = "/readyPage.jsp";
-				if(!GameHelper.setShipOnBoard(request.getParameter("Ship_4x1"), Game.getPlayer(login).getShip3x1(), login)){
+				if(!GameHelper.setShipOnBoard(request.getParameter("Ship_4x1"), Game.getPlayer(login).getShip4x1(), login)){
 					url = "/putShips3.jsp";
-					request.setAttribute("errorInSetBoard", "You can't set there ship, too close to another ship!");
+					request.setAttribute("errorInSetBoard", "You can't set there ship, too close to another ship or too small ship!");
 				}
 			}else{
 				url = "/putShips3.jsp";

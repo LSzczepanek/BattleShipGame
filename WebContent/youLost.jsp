@@ -1,38 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.io.*, java.util.*"%>
+<%@page import="game.Game"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
 <%@include file="head.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<meta http-equiv="refresh" content="15;url=index.jsp" /> 
+
+
 </head>
 <body>
-<center>
-	<!-- Header
+	<center>
+		<!-- Header
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <%@include file="header2.jsp"%>
-	<!-- Page
+		<%@include file="header2.jsp"%>
+		<!-- Page
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    
-    <script>
-  setTimeout(function() {
-      document.location = "/BattleShipGame/isReady";
-  }, 5000); // <-- this is the delay in milliseconds
-</script>
-    <%@include file="playerBoard.jsp" %>
-	<form action="isReady" method=get>
-	<c:set var="readyInfo" value="${requestScope.error}" scope="page" />
-	<c:set var="whoTurn" value="${requestScope.whoTurn}" scope="page" />
-	<h2>Game is preparin to start wait 5sec</h2>
-	<p>${readyInfo}</p>
-	<p>${whoTurn}</p>
-	<!-- <button>I am ready!!</button>-->
-	</form>
+
+		<h1>YOU LOST!!!</h1>
 
 
-	<!-- Footer
+		<!-- Footer
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-<%@include file="footer.jsp"%>
-</center>
+
+		<%@include file="footer.jsp"%>
+	</center>
 </body>
 </html>

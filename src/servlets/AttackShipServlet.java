@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -19,56 +20,74 @@ import game.GameHelper;
 @WebServlet({ "/AttackShipServlet", "/attack" })
 public class AttackShipServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AttackShipServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public AttackShipServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at AttackShipServlet: ").append(request.getContextPath());
-		
 
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		
+
 		String login = (String) request.getSession().getAttribute("login");
 		int[] position = GameHelper.getCoords((request.getParameter("fireTo")));
 		String url = "/board.jsp";
-//		if(!Game.isGamePrepared()){
-//			Game.prepareGame();
-//		}
-		
-//		String[][] board = Game.getBoardOfPlayer1();
+		System.out.println("Now is turn of player " + login + ": " + Game.showWhosTurn(login));
+		if (Game.isPlayerTurn(login)) {
 
-		String infoHit = GameHelper.firePlayer(position[0], position[1], login);
+			String infoHit = GameHelper.firePlayer(position[0], position[1], login);
 
-		request.setAttribute("hitInfo", infoHit);
-		if(login.equals(Game.getNickOfPlayer1())){
+			if (infoHit.equals("YOU WON")) {
+				url = "/youWon.jsp";
+				Game.setSecondPlayerTurn(login);
+				request.setAttribute("gameStatus", infoHit);
+				Game.getPlayer(login).setTaken(false);
+
+
+			} else if (infoHit.equals("YOU LOST")) {
+				url = "/youLost.jsp";
+				request.setAttribute("gameStatus", infoHit);
+				Game.getPlayer(login).setTaken(false);
+
+			} else if (!infoHit.equals("HIT") && !infoHit.equals("SHIP DESTROYED") && !infoHit.equals("WRONG")
+					&& !infoHit.equals("OUT OF BOARD")) {
+				Game.setSecondPlayerTurn(login);
+				System.out.println("Used second player turn!!!");
+			}
+
+			request.setAttribute("hitInfo", infoHit);
+		}
+		if (login.equals(Game.getNickOfPlayer1())) {
 			request.setAttribute("playerBoard", Game.getBoardOfPlayer1());
 			request.setAttribute("enemyBoard", Game.getBoardOfPlayer2());
-			
-			
-		}else if(login.equals(Game.getNickOfPlayer2())){
+
+		} else if (login.equals(Game.getNickOfPlayer2())) {
 			request.setAttribute("playerBoard", Game.getBoardOfPlayer2());
 			request.setAttribute("enemyBoard", Game.getBoardOfPlayer1());
-		}else{
+		} else {
 			System.out.println("Error");
 		}
-		
+		request.setAttribute("whoTurn", Game.showWhosTurn(login));
 		ServletContext context = getServletContext();
 		RequestDispatcher dispatcher = context.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

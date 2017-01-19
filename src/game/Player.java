@@ -28,6 +28,10 @@ public class Player {
 		this.nick = nick;
 	}
 	
+	public boolean checkIsMyTurn(){
+		return isMyTurn;
+	}
+	
 	public boolean isReady() {
 		return isReady;
 	}

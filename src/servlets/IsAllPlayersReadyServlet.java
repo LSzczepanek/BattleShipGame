@@ -64,6 +64,7 @@ public class IsAllPlayersReadyServlet extends HttpServlet {
 			}else{
 				System.out.println("Error");
 			}
+			request.setAttribute("whoTurn", Game.showWhosTurn(login));
 			request.setAttribute("readyInfo", "Your enemy is not ready yet, wait 5sec before next check");
 			url = "/redirectToIsReady.jsp";
 		}

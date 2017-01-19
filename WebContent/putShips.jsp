@@ -17,7 +17,7 @@
 
 		<%@include file="playerBoard.jsp"%>
 		<form action="setBoard" method=get>
-			<label>Ship 2x1</label> <input name="Ship_2x1" type="text">
+			<label>Ship 2x1</label> <input name="Ship_2x1" type="text" required>
 			<button>set ship 2x1</button>
 			<c:set var="errorPutShips" value="${requestScope.errorInSetBoard}"
 				scope="page" />

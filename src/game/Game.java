@@ -25,6 +25,9 @@ public class Game {
 		printBoard(boardOfPlayer2);
 		
 		gameIsPrepared = true;
+		
+		player1.setMyTurn(true);
+		player2.setMyTurn(false);
 
 	}
 	public static String[][] getPlayerBoard(String nick){
@@ -57,6 +60,50 @@ public class Game {
 			return true;
 		}else{
 			return false;
+		}
+	}
+	
+	public static String showWhosTurn(String nick){
+		String result;
+		if(nick.equals(Game.getNickOfPlayer1())){
+			
+			if(player1.checkIsMyTurn()){
+				result = "MY TURN";
+			}else{
+				result = "ENEMY TURN";
+			}
+		}else if(nick.equals(Game.getNickOfPlayer2())){
+			
+			if(player2.checkIsMyTurn()){
+				result = "MY TURN";
+			}else{
+				result = "ENEMY TURN";
+			}
+		}else{
+			result = "NO ONE TURN";
+		}
+		
+		return result;
+	}
+	
+	public static boolean isPlayerTurn(String nick){
+		if(nick.equals(Game.getNickOfPlayer1())){
+			return player1.checkIsMyTurn();
+		}if(nick.equals(Game.getNickOfPlayer2())){
+			return player2.isMyTurn();
+		}else{
+			return false;
+		}
+		
+	}
+	
+	public static void setSecondPlayerTurn(String nick){
+		if(nick.equals(Game.getNickOfPlayer1())){
+			player1.setMyTurn(false);
+			player2.setMyTurn(true);
+		}if(nick.equals(Game.getNickOfPlayer2())){
+			player1.setMyTurn(true);
+			player2.setMyTurn(false);
 		}
 	}
 	
@@ -100,9 +147,7 @@ public class Game {
 		return boardOfPlayer2;
 	}
 	
-	private static void actualGame() {
 
-	}
 
 	public static void main(String[] args) {
 
