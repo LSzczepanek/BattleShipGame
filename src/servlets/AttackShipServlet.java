@@ -63,11 +63,13 @@ public class AttackShipServlet extends HttpServlet {
 					Game.setSecondPlayerTurn(login);
 					request.setAttribute("gameStatus", infoHit);
 					Game.getPlayer(login).setTaken(false);
+					Game.setisGamePreparedFalse();
 
 				} else if (infoHit.equals("YOU LOST")) {
 					url = "/youLost.jsp";
 					request.setAttribute("gameStatus", infoHit);
 					Game.getPlayer(login).setTaken(false);
+					Game.setisGamePreparedFalse();
 
 				} else if (!infoHit.equals("HIT") && !infoHit.equals("SHIP DESTROYED") && !infoHit.equals("WRONG")
 						&& !infoHit.equals("OUT OF BOARD")) {

@@ -7,17 +7,8 @@
 <head>
 <%@include file="head.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<script>
-$(document).ready(
-        function() {
-            setInterval(function() {
-                var randomnumber = Math.floor(Math.random() * 100);
-                $('#show').text(
-                        'I am getting refreshed every 3 seconds..! Random Number ==> '
-                                + randomnumber);
-            }, 3000);
-        });
-</script>
+<META HTTP-EQUIV="Refresh" CONTENT="10">
+
 
 </head>
 <body>
@@ -27,7 +18,17 @@ $(document).ready(
 		<%@include file="header2.jsp"%>
 		<!-- Page
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	<%
+		String login = (String) request.getSession().getAttribute("login");
+		if (login.equals(Game.getNickOfPlayer1())) {
+			request.setAttribute("playerBoard", Game.getBoardOfPlayer1());
+			request.setAttribute("enemyBoard", Game.getBoardOfPlayer2());
 
+		} else if (login.equals(Game.getNickOfPlayer2())) {
+			request.setAttribute("playerBoard", Game.getBoardOfPlayer2());
+			request.setAttribute("enemyBoard", Game.getBoardOfPlayer1());
+		}
+	%>
 
 
 
@@ -37,20 +38,9 @@ $(document).ready(
 		<h1>${whoTurn}</h1>
 		<c:set var="hitInfo" value="${requestScope.infoHit}" scope="page" />
 		<h1>${hitInfo}</h1>
-		<div id="show">
-			<%
-				String login = (String) request.getSession().getAttribute("login");
-				if (login.equals(Game.getNickOfPlayer1())) {
-					request.setAttribute("playerBoard", Game.getBoardOfPlayer1());
-					request.setAttribute("enemyBoard", Game.getBoardOfPlayer2());
 
-				} else if (login.equals(Game.getNickOfPlayer2())) {
-					request.setAttribute("playerBoard", Game.getBoardOfPlayer2());
-					request.setAttribute("enemyBoard", Game.getBoardOfPlayer1());
-				}
-			%>
 			<%@include file="playerBoard.jsp"%>
-		</div>
+
 		<form action="attack" method=post>
 			<input name="fireTo" type="text" required>
 			<button>Fire!</button>

@@ -57,7 +57,7 @@ public class LoginValidationServlet extends HttpServlet {
 		} else {
 			boolean check = Login.loginValid(login, password);
 			if (check == true) {
-				if(!Game.isGamePrepared()){
+				if(!Game.isGamePrepared() ){
 					Game.prepareGame();
 				}
 				HttpSession session = request.getSession();

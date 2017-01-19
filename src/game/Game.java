@@ -2,6 +2,8 @@ package game;
 
 import static game.GameHelper.*;
 
+import org.eclipse.jdt.internal.compiler.ast.ThisReference;
+
 public class Game {
 
 	static String[][] boardOfPlayer1 = new String[11][11];
@@ -46,6 +48,10 @@ public class Game {
 	}
 	public static boolean isGamePrepared(){
 		return gameIsPrepared;
+	}
+	
+	public static void setisGamePreparedFalse(){
+		gameIsPrepared = false;
 	}
 	
 	public static String getNickOfPlayer1(){

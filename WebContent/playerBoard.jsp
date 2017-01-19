@@ -18,8 +18,9 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 
+
 	<h1>YOUR BOARD</h1>
-	<table >
+	<table>
 
 
 		<c:forEach var="field" items='${requestScope.playerBoard}'>
