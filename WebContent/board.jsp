@@ -7,7 +7,7 @@
 <head>
 <%@include file="head.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<META HTTP-EQUIV="Refresh" CONTENT="10">
+<!-- <META HTTP-EQUIV="Refresh" CONTENT="10">-->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
