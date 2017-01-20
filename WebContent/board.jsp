@@ -22,7 +22,7 @@
 
 		setInterval(function() {
 			$("#getPlayerBoard").load(url);
-		}, 10000);
+		}, 5000);
 
 	});
 </script>

@@ -6,6 +6,8 @@ public class Player {
 	public boolean isTaken;
 	public boolean isReady;
 	public String nick;
+	String gameStatus;
+	String hitInfo;
 	public int amountOfShips = 0;
 	public Ship ship2x1 = new Ship(2);
 	public Ship ship3x1 = new Ship(3);
@@ -26,8 +28,25 @@ public class Player {
 	public Player(String nick){
 		this.isReady = false;
 		this.nick = nick;
+		this.gameStatus = new String("ONGOING");
+		this.hitInfo = new String("WAITING FOR ACTION");
 	}
 	
+	public String getHitInfo() {
+		return hitInfo;
+	}
+
+	public void setHitInfo(String hitInfo) {
+		this.hitInfo = hitInfo;
+	}
+
+	public String getGameStatus(){
+		return this.gameStatus;
+	}
+	
+	public void setGameStatus(String status){
+		this.gameStatus = new String(status);
+	}
 	public boolean checkIsMyTurn(){
 		return isMyTurn;
 	}

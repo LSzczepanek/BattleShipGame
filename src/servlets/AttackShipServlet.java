@@ -60,6 +60,7 @@ public class AttackShipServlet extends HttpServlet {
 
 				if (infoHit.equals("YOU WON")) {
 					url = "/youWon.jsp";
+					Game.getPlayer(login).setGameStatus(infoHit);
 					Game.setSecondPlayerTurn(login);
 					request.setAttribute("gameStatus", infoHit);
 					Game.getPlayer(login).setTaken(false);
@@ -67,14 +68,18 @@ public class AttackShipServlet extends HttpServlet {
 
 				} else if (infoHit.equals("YOU LOST")) {
 					url = "/youLost.jsp";
+					Game.getPlayer(login).setGameStatus(infoHit);
 					request.setAttribute("gameStatus", infoHit);
 					Game.getPlayer(login).setTaken(false);
 					Game.setisGamePreparedFalse();
 
 				} else if (!infoHit.equals("HIT") && !infoHit.equals("SHIP DESTROYED") && !infoHit.equals("WRONG")
 						&& !infoHit.equals("OUT OF BOARD")) {
+					Game.getPlayer(login).setHitInfo(infoHit);
 					Game.setSecondPlayerTurn(login);
 					System.out.println("Used second player turn!!!");
+				}else{
+					Game.getPlayer(login).setHitInfo(infoHit);
 				}
 
 				request.setAttribute("hitInfo", infoHit);
