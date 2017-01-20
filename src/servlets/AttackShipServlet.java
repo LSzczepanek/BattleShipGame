@@ -38,25 +38,16 @@ public class AttackShipServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at AttackShipServlet: ").append(request.getContextPath());
 
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// doGet(request, response);
-
 		String login = (String) request.getSession().getAttribute("login");
 		String url = "/board.jsp";
-
-		if (Pattern.matches("[A-J][0-9]", request.getParameter("fireTo"))) {
+		String infoHit = "Nothing";
+		String  fireTo = request.getParameter("fireTo");
+		
+		if (Pattern.matches("[A-J][0-9]", fireTo)) {
 			System.out.println("Now is turn of player " + login + ": " + Game.showWhosTurn(login));
 			if (Game.isPlayerTurn(login)) {
-				int[] position = GameHelper.getCoords((request.getParameter("fireTo")));
-				String infoHit = GameHelper.firePlayer(position[0], position[1], login);
+				int[] position = GameHelper.getCoords(fireTo);
+				infoHit = GameHelper.firePlayer(position[0], position[1], login);
 
 				if (infoHit.equals("YOU WON")) {
 					url = "/youWon.jsp";
@@ -113,9 +104,24 @@ public class AttackShipServlet extends HttpServlet {
 			System.out.println("Error");
 		}
 		request.setAttribute("whoTurn", Game.showWhosTurn(login));
-		ServletContext context = getServletContext();
-		RequestDispatcher dispatcher = context.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(infoHit);
+//		ServletContext context = getServletContext();
+//		RequestDispatcher dispatcher = context.getRequestDispatcher(url);
+//		dispatcher.forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		// doGet(request, response);
+
+
 	}
 
 }

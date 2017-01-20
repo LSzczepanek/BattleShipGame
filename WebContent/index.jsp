@@ -26,9 +26,7 @@
 			<button>Login</button>
 		</form>
 		<p>${error_msg}</p>
-		</div>
-		<div></div>
-		</div>
+
 
 
 		<!-- Footer

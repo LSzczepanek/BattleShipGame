@@ -7,24 +7,7 @@
 <head>
 <%@include file="head.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
-<script type="text/javascript" c>
-	var url2 = '/BattleShipGame/getWhoTurn.jsp';
-
-	$(document).ready(function() {
-
-		$.ajaxSetup({
-			cache : false
-		});
-
-		setInterval(function() {
-			$("#getTurn").load(url2);
-		}, 5000);
-
-	});
-</script>
 
 </head>
 <body>
@@ -33,18 +16,28 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 	<!-- Page
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <%
-    String login = (String) request.getSession().getAttribute("login");
-    if (login.equals(Game.getNickOfPlayer1())) {
-		request.setAttribute("playerBoard1", Game.getBoardOfPlayer1());
+	<%
+		String login = (String) request.getSession().getAttribute("login");
+		if (login.equals(Game.getNickOfPlayer1())) {
+			request.setAttribute("playerBoard1", Game.getBoardOfPlayer1());
 
-	} else if (login.equals(Game.getNickOfPlayer2())) {
-		request.setAttribute("playerBoard1", Game.getBoardOfPlayer2());
-	} else {
-		System.out.println("Error");
-	}
+		} else if (login.equals(Game.getNickOfPlayer2())) {
+			request.setAttribute("playerBoard1", Game.getBoardOfPlayer2());
+		} else {
+			System.out.println("Error");
+		}
+		
+		
+		request.setAttribute("gameStatus", Game.getPlayer(login).getGameStatus());
+		if (Game.getPlayer(login).getGameStatus().equals("YOU WON")) {
+			request.setAttribute("gameStatus", 1);
+		} else if (Game.getPlayer(login).getGameStatus().equals("YOU LOST")) {
+			request.setAttribute("gameStatus", 2);
+		} else {
+			request.setAttribute("gameStatus", 0);
+		}
+	
 	%>
-	<div id="getTurn"></div>
 	<h1>YOUR BOARD</h1>
 	<table>
 
@@ -80,6 +73,18 @@
 		</c:forEach>
 	</table>
 
+
+
+	<c:set var="gameStatus" value="${requestScope.gameStatus}" scope="page" />
+
+	<c:if test="${gameStatus == 1}">
+		<%@ page autoFlush="true" buffer="1094kb"%>
+		<jsp:forward page="youWon.jsp" />
+	</c:if>
+	<c:if test="${gameStatus == 2}">
+		<%@ page autoFlush="true" buffer="1094kb"%>
+		<jsp:forward page="youLost.jsp" />
+	</c:if>
 
 
 	<!-- Footer

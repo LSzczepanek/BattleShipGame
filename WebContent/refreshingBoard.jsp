@@ -7,6 +7,25 @@
 <head>
 <%@include file="head.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<script type="text/javascript" c>
+	var url = '/BattleShipGame/playerBoard.jsp';
+
+	$(document).ready(function() {
+
+		$.ajaxSetup({
+			cache : false
+		});
+
+		setInterval(function() {
+			$("#getPlayerBoard").load(url);
+		}, 5000);
+
+	});
+</script>
+
 
 
 </head>
@@ -20,7 +39,7 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 		<%
-			String login = "user";//(String) request.getSession().getAttribute("login");
+			String login = (String) request.getSession().getAttribute("login");
 			System.out.println(login);
 			System.out.println(Game.getNickOfPlayer1());
 			if (login.equals(Game.getNickOfPlayer1())) {
@@ -35,17 +54,10 @@
 			}
 
 			request.setAttribute("whoTurn", Game.showWhosTurn(login));
-			request.setAttribute("gameStatus", Game.getPlayer(login).getGameStatus());
+			
 			request.setAttribute("hitInfo", Game.getPlayer(login).getHitInfo());
 
-			if (Game.getPlayer(login).getGameStatus().equals("YOU WON")) {
-				request.setAttribute("gameStatus", 1);
-			} else if (Game.getPlayer(login).getGameStatus().equals("YOU LOST")) {
-				request.setAttribute("gameStatus", 2);
-			} else {
-				request.setAttribute("gameStatus", 0);
-			}
-		%>
+
 		%>
 
 		<h1>ENEMY BOARD</h1>
@@ -85,41 +97,9 @@
 
 
 
-		<h1>YOUR BOARD</h1>
-		<table>
+		<div id="getPlayerBoard">
 
-
-			<c:forEach var="field" items='${requestScope.playerBoardRef}'>
-				<tr>
-					<c:forEach var="i" begin="0" end="${fn:length(field)-1}">
-						<c:choose>
-							<c:when test="${field[i] == 'W'}">
-								<td
-									style="background-color: blue; padding-left: 2em; padding-top: 2em;">&nbsp</td>
-							</c:when>
-							<c:when test="${field[i] == 'S'}">
-								<td
-									style="background-color: black; padding-left: 2em; padding-top: 2em;">&nbsp</td>
-							</c:when>
-							<c:when test="${field[i] == 'X'}">
-								<td
-									style="background-color: red; padding-left: 2em; padding-top: 2em;">&nbsp</td>
-							</c:when>
-							<c:when test="${field[i] == 'O'}">
-								<td
-									style="background-color: gray; padding-left: 2em; padding-top: 2em;">&nbsp</td>
-							</c:when>
-							<c:otherwise>
-								<td
-									style="background-color: white; padding-left: 2em; padding-top: 2em;">${field[i]}</td>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-
-				</tr>
-			</c:forEach>
-		</table>
-
+		</div>
 
 
 
@@ -130,17 +110,7 @@
 		<h1>${hitInfo}</h1>
 
 
-		<c:set var="gameStatus" value="${requestScope.gameStatus}"
-			scope="page" />
-
-		<c:if test="${gameStatus == 1}">
-			<%@ page autoFlush="true" buffer="1094kb"%>
-			<jsp:forward page="youWon.jsp" />	
-		</c:if>
-		<c:if test="${gameStatus == 2}">
-			<%@ page autoFlush="true" buffer="1094kb"%>
-			<jsp:forward page="youLost.jsp" />	
-		</c:if>
+		
 
 
 		<!-- Footer 

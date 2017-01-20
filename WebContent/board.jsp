@@ -8,29 +8,40 @@
 <%@include file="head.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!-- <META HTTP-EQUIV="Refresh" CONTENT="10">-->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
-<script type="text/javascript" c>
-	var url = '/BattleShipGame/playerBoard.jsp';
 
-	$(document).ready(function() {
-
-		$.ajaxSetup({
-			cache : false
+<script src="http://code.jquery.com/jquery-latest.js">
+	   
+        
+</script>
+<script>
+	            $(document).ready(function() {
+		$('#fireButton').click(function(event) {
+			var hitInfo = $('#fireTo').val();
+			$.get('/BattleShipGame/attack', {
+				fireTo : hitInfo
+			}, function(responseText) {
+				$('#status').text(responseText);
+				$("#content").load('/BattleShipGame/refreshingBoard.jsp');
+			});
 		});
-
-		setInterval(function() {
-			$("#getPlayerBoard").load(url);
-		}, 5000);
-
 	});
 </script>
-
 </head>
 <body>
-	<center>
 
+	<center>
+		<%
+			String loginBoard = (String) request.getSession().getAttribute("login");
+			request.setAttribute("gameStatus", Game.getPlayer(loginBoard).getGameStatus());
+			if (Game.getPlayer(loginBoard).getGameStatus().equals("YOU WON")) {
+				request.setAttribute("gameStatus", 1);
+			} else if (Game.getPlayer(loginBoard).getGameStatus().equals("YOU LOST")) {
+				request.setAttribute("gameStatus", 2);
+			} else {
+				request.setAttribute("gameStatus", 0);
+			}
+		%>
 		<!-- Header
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 		<%@include file="header2.jsp"%>
@@ -38,45 +49,37 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 
-
-		<%@include file="enemyBoard.jsp"%>
-
-		
-		<!--<c:set var="whoTurn" value="${requestScope.whoTurn}" scope="page" /><h1>${whoTurn}</h1>-->
-		<c:set var="hitInfo" value="${requestScope.infoHit}" scope="page" />
-		<h1>${hitInfo}</h1>
-
-		<div id="getPlayerBoard">
+		<div id="content">
+			<%@include file="refreshingBoard.jsp"%>
 
 		</div>
-		<!--  %@<include file="playerBoard.jsp"%>-->
-		
 
-		<form action="attack" method=post>
-			<input name="fireTo" type="text" required>
-			<button>Fire!</button>
-			<c:set var="errorAttack" value="${requestScope.errorAttack}"
+		<form id="form1">
+		<h1>AJAX Demo using Jquery in JSP and Servlet</h1>
+		Enter your Name: <input type="text" id="fireTo" /> <input type="button"
+			id="fireButton" value="fireTo" />    
+		<div id="status"></div>
+		<c:set var="errorAttack" value="${requestScope.errorAttack}"
 				scope="page" />
 			<p>${errorAttack}</p>
+	</form>
 
-		</form>
-		<c:set var="gameStatus" value="${requestScope.gameStatus}" />
-		<c:set var="won" value="YOU WON" />
-		<c:set var="lost" value="YOU LOST" />
-		<c:choose>
-			<c:when test="${gameStatus}.equals(${won})">
 
-				<c:redirect url="youWon.jsp" />
-			</c:when>
-			<c:when test="${gameStatus}.equals(${lost})">
 
-				<c:redirect url="/youLost.jsp" />
-			</c:when>
 
-			<c:otherwise>
-				<p>Game is still ongoing</p>
-			</c:otherwise>
-		</c:choose>
+		<c:set var="gameStatus" value="${requestScope.gameStatus}"
+			scope="page" />
+
+
+
+		<c:if test="${gameStatus == 1}">
+			<%@ page autoFlush="true" buffer="1094kb"%>
+			<jsp:forward page="youWon.jsp" />
+		</c:if>
+		<c:if test="${gameStatus == 2}">
+			<%@ page autoFlush="true" buffer="1094kb"%>
+			<jsp:forward page="youLost.jsp" />
+		</c:if>
 
 		<!-- Footer
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
