@@ -7,7 +7,24 @@
 <head>
 <%@include file="head.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
+<script type="text/javascript" c>
+	var url2 = '/BattleShipGame/getWhoTurn.jsp';
+
+	$(document).ready(function() {
+
+		$.ajaxSetup({
+			cache : false
+		});
+
+		setInterval(function() {
+			$("#getTurn").load(url2);
+		}, 5000);
+
+	});
+</script>
 
 </head>
 <body>
@@ -16,14 +33,23 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 	<!-- Page
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <%
+    String login = (String) request.getSession().getAttribute("login");
+    if (login.equals(Game.getNickOfPlayer1())) {
+		request.setAttribute("playerBoard1", Game.getBoardOfPlayer1());
 
-
-
+	} else if (login.equals(Game.getNickOfPlayer2())) {
+		request.setAttribute("playerBoard1", Game.getBoardOfPlayer2());
+	} else {
+		System.out.println("Error");
+	}
+	%>
+	<div id="getTurn"></div>
 	<h1>YOUR BOARD</h1>
 	<table>
 
 
-		<c:forEach var="field" items='${requestScope.playerBoard}'>
+		<c:forEach var="field" items='${requestScope.playerBoard1}'>
 			<tr>
 				<c:forEach var="i" begin="0" end="${fn:length(field)-1}">
 					<c:choose>

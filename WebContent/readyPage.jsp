@@ -23,7 +23,7 @@
 	<form action="isReady" method=get>
 	<c:set var="readyInfo" value="${requestScope.error}" scope="page" />
 	<c:set var="whoTurn" value="${requestScope.whoTurn}" scope="page" />
-	<h2>Game is preparin to start wait 5sec</h2>
+	<h2>Game is preparing to start wait 5sec</h2>
 	<p>${readyInfo}</p>
 	<p>${whoTurn}</p>
 	<!-- <button>I am ready!!</button>-->

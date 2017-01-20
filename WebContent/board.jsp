@@ -11,8 +11,8 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
-<script type="text/javascript">
-	var url = 'playerBoard.jsp'
+<script type="text/javascript" c>
+	var url = '/BattleShipGame/playerBoard.jsp';
 
 	$(document).ready(function() {
 
@@ -21,7 +21,7 @@
 		});
 
 		setInterval(function() {
-			$("#displayarea").load(url);
+			$("#getPlayerBoard").load(url);
 		}, 10000);
 
 	});
@@ -30,33 +30,27 @@
 </head>
 <body>
 	<center>
+
 		<!-- Header
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 		<%@include file="header2.jsp"%>
 		<!-- Page
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-		<%
-			String login = (String) request.getSession().getAttribute("login");
-			if (login.equals(Game.getNickOfPlayer1())) {
-				request.setAttribute("playerBoard", Game.getBoardOfPlayer1());
-				request.setAttribute("enemyBoard", Game.getBoardOfPlayer2());
-
-			} else if (login.equals(Game.getNickOfPlayer2())) {
-				request.setAttribute("playerBoard", Game.getBoardOfPlayer2());
-				request.setAttribute("enemyBoard", Game.getBoardOfPlayer1());
-			}
-		%>
 
 
 
 		<%@include file="enemyBoard.jsp"%>
 
-		<c:set var="whoTurn" value="${requestScope.whoTurn}" scope="page" />
-		<h1>${whoTurn}</h1>
+		
+		<!--<c:set var="whoTurn" value="${requestScope.whoTurn}" scope="page" /><h1>${whoTurn}</h1>-->
 		<c:set var="hitInfo" value="${requestScope.infoHit}" scope="page" />
 		<h1>${hitInfo}</h1>
 
-		<%@include file="playerBoard.jsp"%>
+		<div id="getPlayerBoard">
+
+		</div>
+		<!--  %@<include file="playerBoard.jsp"%>-->
+		
 
 		<form action="attack" method=post>
 			<input name="fireTo" type="text" required>
