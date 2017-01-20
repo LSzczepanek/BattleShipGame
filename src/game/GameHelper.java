@@ -38,7 +38,7 @@ public class GameHelper {
 				Game.player1.setAmountOfShips(Game.player1.getAmountOfShips() - 1);
 			}
 			if (Game.player1.getAmountOfShips() == 0) {
-				result = "YUO WON";
+				result = "YOU WON";
 			}
 			return result;
 		} else {
