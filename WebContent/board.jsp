@@ -7,36 +7,53 @@
 <head>
 <%@include file="head.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<!-- <META HTTP-EQUIV="Refresh" CONTENT="10">-->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
+<script type="text/javascript" c>
+	var url = '/BattleShipGame/playerBoard.jsp';
 
-<script src="http://code.jquery.com/jquery-latest.js">
-	   
-        
-</script>
-<script>
-	            $(document).ready(function() {
-		$('#fireButton').click(function(event) {
-			var hitInfo = $('#fireTo').val();
-			$.get('/BattleShipGame/attack', {
-				fireTo : hitInfo
-			}, function(responseText) {
-				$('#status').text(responseText);
-				$("#content").load('/BattleShipGame/refreshingBoard.jsp');
-			});
-		});
-	});
+	$(document)
+			.ready(
+					function() {
+
+						$.ajaxSetup({
+							cache : false
+						});
+						if (<%=Game.getPlayer((String) request.getSession().getAttribute("login")).checkIsMyTurn()%>== false) {
+							setInterval(function() {
+								$("#getPlayerBoard").load(url);
+							}, 5000);
+
+						}
+					});
 </script>
 </head>
 <body>
 
 	<center>
+
 		<%
-			String loginBoard = (String) request.getSession().getAttribute("login");
-			request.setAttribute("gameStatus", Game.getPlayer(loginBoard).getGameStatus());
-			if (Game.getPlayer(loginBoard).getGameStatus().equals("YOU WON")) {
+			String login = (String) request.getSession().getAttribute("login");
+			System.out.println(login);
+			System.out.println(Game.getNickOfPlayer1());
+			if (login.equals(Game.getNickOfPlayer1())) {
+				request.setAttribute("playerBoardRef", Game.getBoardOfPlayer1());
+				request.setAttribute("enemyBoardRef", Game.getBoardOfPlayer2());
+
+			} else if (login.equals(Game.getNickOfPlayer2())) {
+				request.setAttribute("playerBoardRef", Game.getBoardOfPlayer2());
+				request.setAttribute("enemyBoardRef", Game.getBoardOfPlayer1());
+			} else {
+				System.out.println("Error");
+			}
+
+			request.setAttribute("hitInfo", Game.getPlayer(login).getHitInfo());
+
+			request.setAttribute("gameStatus", Game.getPlayer(login).getGameStatus());
+			if (Game.getPlayer(login).getGameStatus().equals("YOU WON")) {
 				request.setAttribute("gameStatus", 1);
-			} else if (Game.getPlayer(loginBoard).getGameStatus().equals("YOU LOST")) {
+			} else if (Game.getPlayer(login).getGameStatus().equals("YOU LOST")) {
 				request.setAttribute("gameStatus", 2);
 			} else {
 				request.setAttribute("gameStatus", 0);
@@ -49,20 +66,21 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 
-		<div id="content">
-			<%@include file="refreshingBoard.jsp"%>
 
-		</div>
+		<%@include file="enemyBoard.jsp"%>
+		<div id="getPlayerBoard"></div>
 
-		<form id="form1">
-		<h1>AJAX Demo using Jquery in JSP and Servlet</h1>
-		Enter your Name: <input type="text" id="fireTo" /> <input type="button"
-			id="fireButton" value="fireTo" />    
-		<div id="status"></div>
-		<c:set var="errorAttack" value="${requestScope.errorAttack}"
+		<c:set var="hitInfo" value="${requestScope.infoHit}" scope="page" />
+		<h1>${hitInfo}</h1>
+
+
+		<form action="attack" method=post>
+			<input name="fireTo" type="text" required>
+			<button>Fire!</button>
+			<c:set var="errorAttack" value="${requestScope.errorAttack}"
 				scope="page" />
 			<p>${errorAttack}</p>
-	</form>
+		</form>
 
 
 

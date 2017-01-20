@@ -26,8 +26,8 @@
 		} else {
 			System.out.println("Error");
 		}
-		
-		
+
+		request.setAttribute("whoTurn", Game.showWhosTurn(login));
 		request.setAttribute("gameStatus", Game.getPlayer(login).getGameStatus());
 		if (Game.getPlayer(login).getGameStatus().equals("YOU WON")) {
 			request.setAttribute("gameStatus", 1);
@@ -36,7 +36,6 @@
 		} else {
 			request.setAttribute("gameStatus", 0);
 		}
-	
 	%>
 	<h1>YOUR BOARD</h1>
 	<table>
@@ -73,7 +72,8 @@
 		</c:forEach>
 	</table>
 
-
+	<c:set var="whoTurn" value="${requestScope.whoTurn}" scope="page" />
+	<h1>${whoTurn}</h1>
 
 	<c:set var="gameStatus" value="${requestScope.gameStatus}" scope="page" />
 
@@ -83,7 +83,7 @@
 	</c:if>
 	<c:if test="${gameStatus == 2}">
 		<%@ page autoFlush="true" buffer="1094kb"%>
-		<jsp:forward page="youLost.jsp" />
+		<c:redirect url="youLost.jsp"/>
 	</c:if>
 
 

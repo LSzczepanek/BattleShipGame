@@ -38,11 +38,21 @@ public class AttackShipServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at AttackShipServlet: ").append(request.getContextPath());
 
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		// doGet(request, response);
 		String login = (String) request.getSession().getAttribute("login");
 		String url = "/board.jsp";
 		String infoHit = "Nothing";
 		String  fireTo = request.getParameter("fireTo");
-		
 		if (Pattern.matches("[A-J][0-9]", fireTo)) {
 			System.out.println("Now is turn of player " + login + ": " + Game.showWhosTurn(login));
 			if (Game.isPlayerTurn(login)) {
@@ -55,6 +65,7 @@ public class AttackShipServlet extends HttpServlet {
 						Game.getPlayer(login).setGameStatus(infoHit);
 						Game.getPlayer("user2").setGameStatus("YOU LOST");
 						Game.getPlayer("user2").setTaken(false);
+						Game.setisGamePreparedFalse();
 					}else if(Game.getNickOfPlayer2().equals(login)){
 						Game.getPlayer(login).setGameStatus(infoHit);
 						Game.getPlayer("user").setGameStatus("YOU LOST");
@@ -91,7 +102,7 @@ public class AttackShipServlet extends HttpServlet {
 			}
 		} else {
 			url = "/board.jsp";
-			request.setAttribute("errorAttack", "You put wrong data, pattern is e.g A0-A1");
+			request.setAttribute("errorAttack", "You put wrong data, pattern is e.g A0");
 		}
 		if (login.equals(Game.getNickOfPlayer1())) {
 			request.setAttribute("playerBoard", Game.getBoardOfPlayer1());
@@ -104,23 +115,9 @@ public class AttackShipServlet extends HttpServlet {
 			System.out.println("Error");
 		}
 		request.setAttribute("whoTurn", Game.showWhosTurn(login));
-		response.setContentType("text/plain");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(infoHit);
-//		ServletContext context = getServletContext();
-//		RequestDispatcher dispatcher = context.getRequestDispatcher(url);
-//		dispatcher.forward(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// doGet(request, response);
-
+		ServletContext context = getServletContext();
+		RequestDispatcher dispatcher = context.getRequestDispatcher(url);
+		dispatcher.forward(request, response);
 
 	}
 

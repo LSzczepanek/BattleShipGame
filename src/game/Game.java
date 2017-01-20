@@ -27,6 +27,8 @@ public class Game {
 		printBoard(boardOfPlayer2);
 		
 		gameIsPrepared = true;
+		player1 = new Player("user");
+		player2 = new Player("user2");
 		
 		player1.setMyTurn(true);
 		player2.setMyTurn(false);
