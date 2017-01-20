@@ -107,23 +107,19 @@ public class GameHelper {
 		int end;
 		if (ship.coordStart.getX() == ship.coordEnd.getX()) {
 			if (ship.getSize() != (Math.abs(ship.coordStart.getY() - ship.coordEnd.getY()) + 1)) {
-				System.out.println("Ship is too small!!");
 				return false;
 			}
 
 			for (int i = ship.coordStart.getY() - 1; i <= ship.coordEnd.getY() + 1; i++) {
 				try {
 					if (board[ship.coordStart.getX()][i].equals("S")) {
-						System.out.println("1st of X");
 						return false;
 					}
 
 					if (board[ship.coordStart.getX() - 1][i].equals("S")) {
-						System.out.println("2nd of X");
 						return false;
 					}
 					if (board[ship.coordStart.getX() + 1][i].equals("S")) {
-						System.out.println("3rd of X");
 						return false;
 					}
 
@@ -151,23 +147,19 @@ public class GameHelper {
 			return true;
 		} else if (ship.coordStart.getY() == ship.coordEnd.getY()) {
 			if (ship.getSize() != (Math.abs(ship.coordStart.getX() - ship.coordEnd.getX()) + 1)) {
-				System.out.println("Ship too small Y");
 				return false;
 			}
 
 			for (int i = ship.coordStart.getX() - 1; i <= ship.coordEnd.getX() + 1; i++) {
 				try {
 					if (board[i][ship.coordStart.getY()].equals("S")) {
-						System.out.println("1st of Y");
 						return false;
 					}
 
-					if (board[ship.coordStart.getY() - 1][i].equals("S")) {
-						System.out.println("2nd of Y");
+					if (board[i][ship.coordStart.getY() - 1].equals("S")) {
 						return false;
 					}
-					if (board[ship.coordStart.getY() + 1][i].equals("S")) {
-						System.out.println("3rd of Y");
+					if (board[i][ship.coordStart.getY() + 1].equals("S")) {
 						return false;
 					}
 
