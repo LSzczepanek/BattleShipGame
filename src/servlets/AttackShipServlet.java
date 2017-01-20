@@ -60,7 +60,21 @@ public class AttackShipServlet extends HttpServlet {
 
 				if (infoHit.equals("YOU WON")) {
 					url = "/youWon.jsp";
-					Game.getPlayer(login).setGameStatus(infoHit);
+					if(Game.getNickOfPlayer1().equals(login)){
+						Game.getPlayer(login).setGameStatus(infoHit);
+						Game.getPlayer("user2").setGameStatus("YOU LOST");
+						Game.getPlayer("user2").setTaken(false);
+					}else if(Game.getNickOfPlayer2().equals(login)){
+						Game.getPlayer(login).setGameStatus(infoHit);
+						Game.getPlayer("user").setGameStatus("YOU LOST");
+						Game.getPlayer("user").setTaken(false);
+					}else{
+						Game.getPlayer("user").setGameStatus("YOU LOST");
+						Game.getPlayer("user2").setGameStatus("YOU LOST");
+						Game.getPlayer("user").setTaken(false);
+						Game.getPlayer("user2").setTaken(false);
+					}
+					
 					Game.setSecondPlayerTurn(login);
 					request.setAttribute("gameStatus", infoHit);
 					Game.getPlayer(login).setTaken(false);
