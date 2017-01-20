@@ -8,7 +8,24 @@
 <%@include file="head.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <META HTTP-EQUIV="Refresh" CONTENT="10">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
+<script type="text/javascript">
+	var url = 'playerBoard.jsp'
+
+	$(document).ready(function() {
+
+		$.ajaxSetup({
+			cache : false
+		});
+
+		setInterval(function() {
+			$("#displayarea").load(url);
+		}, 10000);
+
+	});
+</script>
 
 </head>
 <body>
@@ -18,17 +35,17 @@
 		<%@include file="header2.jsp"%>
 		<!-- Page
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-	<%
-		String login = (String) request.getSession().getAttribute("login");
-		if (login.equals(Game.getNickOfPlayer1())) {
-			request.setAttribute("playerBoard", Game.getBoardOfPlayer1());
-			request.setAttribute("enemyBoard", Game.getBoardOfPlayer2());
+		<%
+			String login = (String) request.getSession().getAttribute("login");
+			if (login.equals(Game.getNickOfPlayer1())) {
+				request.setAttribute("playerBoard", Game.getBoardOfPlayer1());
+				request.setAttribute("enemyBoard", Game.getBoardOfPlayer2());
 
-		} else if (login.equals(Game.getNickOfPlayer2())) {
-			request.setAttribute("playerBoard", Game.getBoardOfPlayer2());
-			request.setAttribute("enemyBoard", Game.getBoardOfPlayer1());
-		}
-	%>
+			} else if (login.equals(Game.getNickOfPlayer2())) {
+				request.setAttribute("playerBoard", Game.getBoardOfPlayer2());
+				request.setAttribute("enemyBoard", Game.getBoardOfPlayer1());
+			}
+		%>
 
 
 
@@ -39,7 +56,7 @@
 		<c:set var="hitInfo" value="${requestScope.infoHit}" scope="page" />
 		<h1>${hitInfo}</h1>
 
-			<%@include file="playerBoard.jsp"%>
+		<%@include file="playerBoard.jsp"%>
 
 		<form action="attack" method=post>
 			<input name="fireTo" type="text" required>
