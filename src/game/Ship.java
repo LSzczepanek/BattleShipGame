@@ -35,7 +35,10 @@ public class Ship {
 			return false;
 		}
 	}
-	
+	/**
+	 * Ustawia początek statku na podanej pozycji
+	 * @param coord kordynaty
+	 */
 	public void setCoordinatesStart(String coord){
 		int x;
 		int y;
@@ -67,7 +70,10 @@ public class Ship {
 		}
 		coordStart = new Coordinate(x, y);
 	}
-	
+	/**
+	 * Ustawia koniec statku na podanej pozycji
+	 * @param coord koordynaty
+	 */
 	public void setCoordinatesEnd(String coord){
 		int x;
 		int y;

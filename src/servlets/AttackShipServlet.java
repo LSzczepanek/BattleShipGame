@@ -48,13 +48,15 @@ public class AttackShipServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// doGet(request, response);
+
 		String login = (String) request.getSession().getAttribute("login");
 		String url = "/board.jsp";
 		String infoHit = "Nothing";
 		String  fireTo = request.getParameter("fireTo");
+		//Sprawdzenie czy user podał prawidłowe dane
 		if (Pattern.matches("[A-J][0-9]", fireTo)) {
 			System.out.println("Now is turn of player " + login + ": " + Game.showWhosTurn(login));
+			//Sprawdzenie czy jest tura danego usera
 			if (Game.isPlayerTurn(login)) {
 				int[] position = GameHelper.getCoords(fireTo);
 				infoHit = GameHelper.firePlayer(position[0], position[1], login);

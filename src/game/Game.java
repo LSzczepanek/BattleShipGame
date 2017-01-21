@@ -15,7 +15,9 @@ public class Game {
 	static Ship ship = new Ship(2);
 	static Ship ship2 = new Ship(3);
 	static boolean gameIsPrepared = false;
-
+/**
+ * Funkcja realizje przygotwanie gry, inicjalzuje każdy obiekt wymagany do startu
+ */
 	public static void prepareGame() {
 		Board.initlize(boardOfPlayer1);
 		Board.initlize(boardOfPlayer2);
@@ -34,6 +36,13 @@ public class Game {
 		player2.setMyTurn(false);
 
 	}
+	
+	
+	/**
+	 * Funkcja zwraca plansze odpowiedniego gracza
+	 * @param nick - nazwa loginu gracza
+	 * @return zwraca tablice 2 wymiarowa, która jest de facto naszą planszą
+	 */
 	public static String[][] getPlayerBoard(String nick){
 		if(nick.equals(Game.getNickOfPlayer1())){
 			return getBoardOfPlayer1();
@@ -70,7 +79,11 @@ public class Game {
 			return false;
 		}
 	}
-	
+	/**
+	 * Funkcja pokazuje kogo jest obecnie tura
+	 * @param nick - potrzebny do identyfikacji kto woła metode
+	 * @return zwraca "MY TURN" albo "ENEMY TURN"
+	 */
 	public static String showWhosTurn(String nick){
 		String result;
 		if(nick.equals(Game.getNickOfPlayer1())){
@@ -93,7 +106,11 @@ public class Game {
 		
 		return result;
 	}
-	
+	/**
+	 * Sprawdza czy jest to tura danego gracza
+	 * @param nick wymagany do identyfikacji kto wywołał metode
+	 * @return
+	 */
 	public static boolean isPlayerTurn(String nick){
 		if(nick.equals(Game.getNickOfPlayer1())){
 			return player1.checkIsMyTurn();
@@ -105,6 +122,11 @@ public class Game {
 		
 	}
 	
+	/**
+	 * Przekazuje ture do drugiego gracza
+	 * @param nick wymagany do identyfikacji kto wywołał metode
+	 */
+	
 	public static void setSecondPlayerTurn(String nick){
 		if(nick.equals(Game.getNickOfPlayer1())){
 			player1.setMyTurn(false);
@@ -114,7 +136,11 @@ public class Game {
 			player2.setMyTurn(false);
 		}
 	}
-	
+	/**
+	 * Ustawia graczowu, że jest gotowy na gre, które jest potem potrzebne do wystartowania partii
+	 * @param nick wymagany do identyfikacji kto wywołał metode
+	 * @param isReady wartość na jaka powinna ustawic sie gracza gotowość
+	 */
 	public static void setReadyForPlayer(String nick, boolean isReady){
 		if(nick.equals(player1.nick)){
 			System.out.println("in set ready for player1");
@@ -126,7 +152,11 @@ public class Game {
 			System.out.println("Error");
 		}
 	}
-	
+	/**
+	 * Zwraca gracza
+	 * @param login wymagany do identyfikacji kto wywołał metode
+	 * @return Player
+	 */
 	public static Player getPlayer(String login){
 		if(login.equals(player1.nick)){
 			return player1;
@@ -137,6 +167,10 @@ public class Game {
 		}
 	}
 
+/**
+ * Uzyta tylko wewnetrznie na konsoli, wystepuje w celach sprawdzania poprawności na serwerze
+ * @param board plansza do wyświetlenia
+ */
 	private static void printBoard(String[][] board) {
 		for (String[] string : board) {
 			System.out.println();
@@ -155,22 +189,4 @@ public class Game {
 		return boardOfPlayer2;
 	}
 	
-
-
-	public static void main(String[] args) {
-
-		prepareGame();
-		ship = new Ship(3);
-		setShipOnBoard(ship, "A0-A3", boardOfPlayer1, realBoardOfPlayer1);
-		printBoard(boardOfPlayer1);
-//		boardOfPlayer1[A][3] = "S";
-//		printBoard(boardOfPlayer1);
-		System.out.println("Ship life: "+ship.lifeOfShip);
-		System.out.println(GameHelper.fire(A, 2, boardOfPlayer1, realBoardOfPlayer1));
-		System.out.println("Ship life: "+ship.lifeOfShip);
-		System.out.println(GameHelper.fire(A, 1, boardOfPlayer1, realBoardOfPlayer1));
-		System.out.println("Ship life: "+ship.lifeOfShip);
-		printBoard(boardOfPlayer1);
-	}
-
 }

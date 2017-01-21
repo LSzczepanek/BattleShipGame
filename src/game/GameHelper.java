@@ -13,6 +13,14 @@ public class GameHelper {
 	public static final int I = 9;
 	public static final int J = 10;
 
+	/**
+	 * Przyjmuje parametry ze strony oraz wykonuje strzał w plansze
+	 * @param x 
+	 * @param y
+	 * @param player wymagany do identyfikacji kto wywołał metode
+	 * @return zwraca ciąg znaków mowiący o tym czy trafiliśmy, czy nie, 
+	 * czy statek został zniszczony oraz status gry, gdy ktoś wygra
+	 */
 	public static String firePlayer(int x, int y, String player) {
 
 		if (player.equals(Game.player1.nick)) {
@@ -46,6 +54,15 @@ public class GameHelper {
 		}
 
 	}
+	
+	/**
+	 * Funkcja adekwatna do poprzedniej wykonująca tak naprawde dalszy ciąg wydarzeń z wieksza ilościa parametrów
+	 * @param x
+	 * @param y
+	 * @param playerBoard plansza przeciwnego gracza
+	 * @param realBoard odpowiednik planszy gracza ale z realnymi obiektami
+	 * @return String z wiadomościa o naszym strzale
+	 */
 
 	public static String fire(int x, int y, String[][] playerBoard, Ship[][] realBoard) {
 
@@ -69,6 +86,14 @@ public class GameHelper {
 		}
 	}
 
+	/**
+	 * Funkcja wywołująca prawdzwina funkcje odpowiadjąca za ustawianie statków na planszy.
+	 * 				
+	 * @param coor koordynaty gdzie ma się znaleźć statek
+	 * @param ship referencja do statku
+	 * @param player gracz który zleca wywołanie funkcji
+	 * @return
+	 */
 	public static boolean setShipOnBoard(String coor, Ship ship, String player) {
 		if (player.equals(Game.player1.nick)) {
 			System.out.println("Player 1 set ship");
@@ -96,7 +121,17 @@ public class GameHelper {
 		}
 
 	}
-
+	
+	
+	/**
+	 * Duża i zawiła funkcja ustawiająca statki na planszy oraz planszy z obiektami.
+	 * Sprawdza ona czy dany statek można postawić czy nie zostały złamane jakieś zasady
+	 * 
+	 * @param coor położenie statku
+	 * @param ship referencja do realnego statku gracza
+	 * @param player gracz który ustawia statek
+	 * @return zwraca wiadomość o tym czy sie udało ustawić statek czy nie używając boolean
+	 */
 	public static boolean setShipOnBoard(Ship ship, String coor, String[][] board, Ship[][] realBoard) {
 		String[] coord = coor.split("-");
 
@@ -192,7 +227,11 @@ public class GameHelper {
 		}
 
 	}
-
+/**
+ * Zwraca wartość int ze stringów przekazanych przez gracza
+ * @param coord koordynaty statku,np A0
+ * @return
+ */
 	public static int[] getCoords(String coord) {
 		int x;
 		int y;

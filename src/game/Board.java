@@ -6,8 +6,16 @@ public class Board {
 	public Board(){
 		
 	}
+	
+	/**
+	 * Funkcja realizuje inicjalizacje wstepna dla planszy gry
+	 * 
+	 * 
+	 * @param board - przyjmuje plansze która ma zainicjalizować
+	 * 
+	 * 
+	 */
 	public static void initlize(String[][] board){
-//		String[][] tmpBoard = board.clone();
 		for (int i = 0; i < board.length; i++) {
 		    for (int j = 0; j < board[i].length; j++) {
 		        board[i][j] = "W";
@@ -23,7 +31,6 @@ public class Board {
 		}
 		board[0][0] = "";
 		
-//		return tmpBoard;
 	}
 
 }
