@@ -25,6 +25,8 @@
 								$("#getPlayerBoard").load(url);
 							}, 5000);
 
+						} else if(<%=Game.getPlayer((String) request.getSession().getAttribute("login")).getGameStatus()%>==="YOU LOST"){
+							location.replace('/BattleShipGame/youLost.jsp');
 						}
 					});
 </script>

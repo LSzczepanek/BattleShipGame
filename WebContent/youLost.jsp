@@ -25,7 +25,7 @@
 		<!-- Footer
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-		<%@include file="footer.jsp"%>
+		
 	</center>
 </body>
 </html>
